@@ -16,15 +16,3 @@ alias grep='grep --color=always'
 alias commit='git commit -m '
 
 alias netstatDefault='netstat -atup -c'
-
-
-
-function dowmloadGitHubBranch(){
-	user_and_repo=$1
-	branch=$2
-	fileName=$3
-	sudo curl -XGET http://${artifactory-server}/artifactory/api/vcs/downloadBranch/${githubrepo}/$user_and_repo/$branch?ext=tar.gz -o $fileName.tar.gz
-}
-
-
-
