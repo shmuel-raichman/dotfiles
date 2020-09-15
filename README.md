@@ -1,6 +1,3 @@
-B"H
-
-# Add this to ~/.bashrc or ~/.bash_profile or both if you not sure.
-if [ -f ~/dotfiles/.bash_customize ]; then
-     . ~/dotfiles/.bash_customize 
-fi
+# B"H
+# Run the command below ~/.bashrc or ~/.bash_profile or both if you not sure.
+cat dotfiles/add_to_dot_bash >> .bashrc
