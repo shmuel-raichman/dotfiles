@@ -1,0 +1,30 @@
+# B"H
+
+# ls
+alias ll='ls -la'
+alias lll='ls -la'
+alias l='ls -la'
+
+# docker 
+alias docExec='docker exec -it'
+alias docRun='docker run -dit --rm --name'
+alias docPS='docker ps'
+
+alias grep='grep --color=always'
+
+# Git
+alias commit='git commit -m '
+
+alias netstatDefault='netstat -atup -c'
+
+
+
+function dowmloadGitHubBranch(){
+	user_and_repo=$1
+	branch=$2
+	fileName=$3
+	sudo curl -XGET http://${artifactory-server}/artifactory/api/vcs/downloadBranch/${githubrepo}/$user_and_repo/$branch?ext=tar.gz -o $fileName.tar.gz
+}
+
+
+

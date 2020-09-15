@@ -1,0 +1,14 @@
+# B"H
+
+. ~/dotfiles/.bash_kube_aliases
+. ~/dotfiles/.bash_general_aliases
+. ~/dotfiles/.bash_ps1
+
+# To add git colors
+# Version: 2.13
+# Add the following to your ~/.gitconfig
+#includeIf "gitdir:~/dotfiles/"]
+#  path = .gitconfig
+#
+# For eariler versions
+# export GIT_CONFIG=~/dotfiles/.gitconfig
