@@ -9,6 +9,13 @@ GIT_COMPLETION_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_COMPLETION_NAME
 
 if [ -f $GIT_PROMPT_PATH ]; then
         . $GIT_PROMPT_PATH
+	echo "sourced"
+else
+	echo "missing __git_ps1"
+	__git_ps1()
+	{
+		echo "( missing __git_ps1 )"
+	}
 fi
 
 # Prompt
