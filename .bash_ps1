@@ -1,16 +1,18 @@
 # B"H
 
 GIT_SCRIPTS_DIR_PATH="/usr/share/git-core/contrib/completion"
+GIT_DEBIAN_WSL_PS1_PATH="/usr/lib/git-core/git-sh-prompt"
 GIT_PROMPT_NAME="git-prompt.sh"
 GIT_COMPLETION_NAME="git-completion.tcsh"
 GIT_PROMPT_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_PROMPT_NAME
 GIT_COMPLETION_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_COMPLETION_NAME
 
 
-if [ -f $GIT_PROMPT_PATH ]; then
-        . $GIT_PROMPT_PATH
-	echo "sourced"
-else
+if [ -f $GIT_DEBIAN_WSL_PS1_PATH ]; then
+	. $GIT_DEBIAN_WSL_PS1_PATH
+elif [ -f $GIT_PROMPT_PATH ]; then
+	. $GIT_PROMPT_PATH
+else	
 	echo "missing __git_ps1"
 	__git_ps1()
 	{
