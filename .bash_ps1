@@ -22,6 +22,6 @@ fi
 
 # Prompt
 # Green
-# PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$ '
+# PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ '
 # Somewhat yellow, not sure how to call this collor.
-PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[0;32m\]\n${debian_chroot:+($debian_chroot)}\[\033[33;1m\]\u@\h\[\033[00m\]:$ '
+PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[0;32m\]\n${debian_chroot:+($debian_chroot)}\[\033[33;1m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ '
