@@ -1,15 +1,27 @@
 # B"H
 
 GIT_SCRIPTS_DIR_PATH="/usr/share/git-core/contrib/completion"
+GIT_DEBIAN_WSL_PS1_PATH="/usr/lib/git-core/git-sh-prompt"
 GIT_PROMPT_NAME="git-prompt.sh"
 GIT_COMPLETION_NAME="git-completion.tcsh"
 GIT_PROMPT_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_PROMPT_NAME
 GIT_COMPLETION_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_COMPLETION_NAME
 
 
-if [ -f $GIT_PROMPT_PATH ]; then
-        . $GIT_PROMPT_PATH
+if [ -f $GIT_DEBIAN_WSL_PS1_PATH ]; then
+    . $GIT_DEBIAN_WSL_PS1_PATH
+elif [ -f $GIT_PROMPT_PATH ]; then
+    . $GIT_PROMPT_PATH
+else	
+	echo "missing __git_ps1"
+	__git_ps1()
+	{
+		echo "( missing __git_ps1 )"
+	}
 fi
 
 # Prompt
-PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ '
+# Green
+# PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$ '
+# Somewhat yellow, not sure how to call this collor.
+PS1='\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[0;32m\]\n${debian_chroot:+($debian_chroot)}\[\033[33;1m\]\u@\h\[\033[00m\]:$ '
