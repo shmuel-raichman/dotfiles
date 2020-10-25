@@ -1,3 +1,4 @@
+#!/bin/bash
 # B"H
 
 source <(kubectl completion bash) # setup autocomplete for kubectl
@@ -26,7 +27,7 @@ alias set_cluster='kubectl config use-context'
 # #################################################################
 # Old switch cluster command (hard coded).
 # #################################################################
-alias switchInt='kubectl config use-context int-context'
+alias switchPrd='kubectl config use-context prod-context'
 #############################################################################################################################
 # DEPRECATED
 # DEPRECATED

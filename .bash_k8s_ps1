@@ -1,0 +1,44 @@
+#!/bin/bash
+# B"H
+
+light_red_cluster_color="\e[91m"
+cyan_namespace_color="\e[36m"
+default_text_color="\e[39m"
+
+k8s_ps1()
+{
+    if kubectl config current-context 2>&1 | grep -q 'error' ;
+        then
+            # echo "No context";
+            k8s_ps1="No context"
+    elif [ "$K8S_PS1_ENABLED" = "false" ];
+        then 
+        # echo "Disabled";
+        k8s_ps1="disabled"
+    else
+        # current_context=$(kubectl config current-context)
+        current_context=$(kubectl config current-context)
+        current_namespace=$(kubectl config view --minify | grep namespace | awk '{print $2}')
+        DEFAULT_K8S_PS1=" ($light_red_cluster_color$current_context$default_text_color:$cyan_namespace_color$current_namespace$default_text_color) "
+        # PS1="$PS1 ~ Current context: $(kubectl config current-context)"
+        echo -e $DEFAULT_K8S_PS1
+    fi
+}
+
+
+enable_k8s_ps1()
+{
+    echo "K8S_PS1_ENABLED=true" > ~/dotfiles/.bash_k8s_enabled
+    . ~/dotfiles/.bash_k8s_enabled
+    . ~/dotfiles/.bash_customize
+}
+
+
+disable_k8s_ps1()
+{
+    echo "K8S_PS1_ENABLED=false" > ~/dotfiles/.bash_k8s_enabled
+    . ~/dotfiles/.bash_k8s_enabled
+    . ~/dotfiles/.bash_customize
+}
+
+
