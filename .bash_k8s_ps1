@@ -15,6 +15,10 @@ k8s_ps1()
         then 
         # echo "Disabled";
         k8s_ps1="disabled"
+    elif kubectl version 2>&1 | grep -q 'error' ;
+        then
+        # echo "Disabled";
+        k8s_ps1="disabled"
     else
         # current_context=$(kubectl config current-context)
         current_context=$(kubectl config current-context)
