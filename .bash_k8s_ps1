@@ -1,9 +1,8 @@
 #!/bin/bash
 # B"H
-
-light_red_cluster_color="\e[91m"
-cyan_namespace_color="\e[36m"
-default_text_color="\e[39m"
+LIGTH_RED_COLOR="\001\033[91m\002"
+CAYN_COLOR="\001\033[36m\002"
+RESET_COLOR_K8S="\001\033[00m\002"
 
 k8s_ps1()
 {
@@ -20,12 +19,11 @@ k8s_ps1()
         # echo "Disabled";
         k8s_ps1="disabled"
     else
-        # current_context=$(kubectl config current-context)
-        current_context=$(kubectl config current-context)
-        current_namespace=$(kubectl config view --minify | grep namespace | awk '{print $2}')
-        DEFAULT_K8S_PS1=" ($light_red_cluster_color$current_context$default_text_color:$cyan_namespace_color$current_namespace$default_text_color) "
-        # PS1="$PS1 ~ Current context: $(kubectl config current-context)"
-        echo -e $DEFAULT_K8S_PS1
+        local current_context=$(kubectl config current-context)
+        local current_namespace=$(kubectl config view --minify | grep namespace | awk '{print $2}')
+
+        DEFAULT_K8S_PS1=" ($LIGTH_RED_COLOR$current_context$RESET_COLOR_K8S:$CAYN_COLOR$current_namespace$RESET_COLOR_K8S) "
+        printf $DEFAULT_K8S_PS1
     fi
 }
 
