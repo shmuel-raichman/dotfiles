@@ -7,6 +7,8 @@ So whenever i use new computer or vm on regular base i just clone it to $HOME, s
 <!-- [![asciicast](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT.svg)](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT) -->
 ![](https://github.com/smuel1414/dotfiles/blob/files/demo/dotfile-02.gif)
 
+[asciinema](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT) Here you can copy the commands shown in the gif
+
 # Install
 ## Run the command below ~/.bashrc or ~/.bash_profile or both if you not sure.
 cat dotfiles/add_to_dot_bash >> .bashrc
