@@ -5,6 +5,7 @@ So whenever i use new computer or vm on regular base i just clone it to $HOME, s
 
 # PS1 Demo
 [![asciicast](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT.svg)](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT)
+![example gif](https://drive.google.com/file/d/1hwZ5TtUBs4zCtYCxxEiOTtpPqUv-GpIU/view?usp=sharing)
 
 # Install
 ## Run the command below ~/.bashrc or ~/.bash_profile or both if you not sure.
