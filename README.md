@@ -1,6 +1,6 @@
 B"H
 
-I use it to collect all my dotfiles (.bash..., .vimrc, etc..) <br>
+I use it to collect all my dotfiles, mostly bash aliases and functions i'm using frequently (kubectl, git, etc..) <br>
 So whenever i use new computer or vm on regular base i just clone it to $HOME, source it and here i have my custom shell
 
 # PS1 Demo
@@ -10,9 +10,11 @@ So whenever i use new computer or vm on regular base i just clone it to $HOME, s
 [asciinema](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT) Here you can copy the commands shown in the gif
 
 # Install
-## Run the command below ~/.bashrc or ~/.bash_profile or both if you not sure.
+## Run the command below: 
+```
 cat dotfiles/add_to_dot_bash >> .bashrc
-
+```
+Change to `~/.bashrc` or `~/.bash_profile`, if you not sure do the same for both.
 # Kuberentes PS1
 Kubernetes Prompt (PS1) Can be enabled and disabled by running the commands
 ```
