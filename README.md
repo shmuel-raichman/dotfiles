@@ -10,7 +10,7 @@ So whenever i use new computer or vm on regular base i just clone it to $HOME, s
 [asciinema](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT) Here you can copy the commands shown in the gif
 
 # Install
-## Run the command below: 
+### Run the command below: 
 ```
 cat dotfiles/add_to_dot_bash >> .bashrc
 ```
