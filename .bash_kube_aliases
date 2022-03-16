@@ -29,10 +29,6 @@ complete -F _get_clusters_contexts_completions set_cluster
 # Set alias of kubectl command for changing clusters.
 alias set_cluster='kubectl config use-context'
 
-###
-# Login to new clusters
-### 
-
 
 
 # Namespaces

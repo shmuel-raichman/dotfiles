@@ -27,7 +27,7 @@ alias grep='grep --color=always'
 alias commit='git commit -m '
 
 
-# PATH
+
 
 # hash kubectl 2>/dev/null || { echo >&2 "I require kubectl but it's not installed.";}
 
