@@ -1,13 +1,6 @@
 #!/bin/bash
 # B"H
 
-GIT_SCRIPTS_DIR_PATH="/usr/share/git-core/contrib/completion"
-GIT_DEBIAN_WSL_PS1_PATH="/usr/lib/git-core/git-sh-prompt"
-GIT_PROMPT_NAME="git-prompt.sh"
-GIT_COMPLETION_NAME="git-completion.tcsh"
-GIT_PROMPT_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_PROMPT_NAME
-GIT_COMPLETION_PATH=$GIT_SCRIPTS_DIR_PATH/$GIT_COMPLETION_NAME
-
 # Remote indicator
 REMOTE_INDICATOR_TEXT=""
 REMOTE_INDICATOR=""
@@ -18,55 +11,24 @@ BOLD_BLUE="\[\033[01;34m\]"
 GREEN="\[\033[32m\]"
 BOLD_GREEN="\[\033[01;32m\]"
 SOMEWHAT_YELLOW="\[\033[33;1m\]"
-DEFAULT_HOSTANDUSER_COLOR=$SOMEWHAT_YELLOW
+DEFAULT_HOSTANDUSER_COLOR=$GREEN
 # Non printing characters esacpes
 ## BEGIN_NON_PRINTING_CHARS="\["
 ## END_NON_PRINTING_CHARS="\]"
 ## BEGIN_NON_PRINTING_CHARS_NUMERIC="\001"
 ## END_NON_PRINTING_CHARS_NUMERIC="\002"
 
-if [ -f $GIT_PROMPT_PATH ]; then
-        . $GIT_PROMPT_PATH
-fi
-
-if [ -f $GIT_DEBIAN_WSL_PS1_PATH ]; then
-    . $GIT_DEBIAN_WSL_PS1_PATH
-elif [ -f $GIT_PROMPT_PATH ]; then
-    . $GIT_PROMPT_PATH
-else	
-	echo "missing __git_ps1"
-	__git_ps1()
-	{
-		echo "( missing __git_ps1 )"
-	}
-fi
-
-
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; 
-    then
-    # SSH
-    REMOTE_INDICATOR_TEXT="SSH"
-    REMOTE_INDICATOR="$REMOTE_INDICATOR_COLOR $REMOTE_INDICATOR_TEXT $RESET_COLOR"
-    # PS1="\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n\[\033[01;46m\] SSH \[\033[00m\] ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ "
-elif cat /proc/version | grep -q Microsoft; 
-    then 
-    # WSL
-    REMOTE_INDICATOR_TEXT="WSL"
-    REMOTE_INDICATOR="$REMOTE_INDICATOR_COLOR $REMOTE_INDICATOR_TEXT $RESET_COLOR"
-    # PS1="\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n$REMOTE_INDICATOR ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ "
-else
-    # Prompt
-    REMOTE_INDICATOR=""
-    # PS1="\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ "
-fi
 
 # Save orginal PS1 before colors apresented as vars
-# PS1="\[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n$REMOTE_INDICATOR ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ "
-# PS1 With variables and commands content.
+#PS1="\$(k8s_ps1) \[\033[01;34m\]\w\[\033[00m\] \[\033[32m\]$(__git_ps1)\[\033[00m\]\n$REMOTE_INDICATOR ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:$(k8s_ps1)$ "
+#PS1 With variables and commands content.
 ## [LIGTH_BLUE]{Working_diractry}[RESET_COLOR] [GREEN] {GIT_PS1}[RESET_COLOR]
 ## [WITHE_TEXT_LIGHT_BLUE_BACKGROUND]{REMOTE_INDICATOR} [BOLD_GREEN]{USER}{@}{HOSTNAME}[RESET_COLOR]{:(}[RED]{K8S_CONTEXT}{:}[CAYN]{K8S-NAMESPACE}[RESET_COLOR]{)$ }
-PS1_FIRST_LINE="$BOLD_BLUE\w$RESET_COLOR $GREEN\$(__git_ps1)$RESET_COLOR"
-PS1_SECOND_LINE="$REMOTE_INDICATOR ${debian_chroot:+($debian_chroot)}$DEFAULT_HOSTANDUSER_COLOR\u@\h$RESET_COLOR:\$(k8s_ps1)$ "
+#PS1_FIRST_LINE="\$(k8s_ps1)     $BOLD_BLUE\w$RESET_COLOR $GREEN\$(__git_ps1)$RESET_COLOR"
+#PS1_SECOND_LINE="$REMOTE_INDICATOR ${debian_chroot:+($debian_chroot)}$DEFAULT_HOSTANDUSER_COLOR\u@\h$RESET_COLOR:$ "
+
+PS1_FIRST_LINE="\$(k8s_ps1) $BOLD_BLUE\w$RESET_COLOR $GREEN\$(__git_ps1)$RESET_COLOR"
+PS1_SECOND_LINE="$REMOTE_INDICATOR ${debian_chroot:+($debian_chroot)}$DEFAULT_HOSTANDUSER_COLOR\u@\h$RESET_COLOR:$ "
 
 PS1="$PS1_FIRST_LINE\n$PS1_SECOND_LINE"
 # Prompt

@@ -1,6 +1,5 @@
 # B"H
 
-. ~/dotfiles/.bash_general_aliases
 . ~/dotfiles/.bash_k8s_ps1
 . ~/dotfiles/.bash_ps1
 
@@ -9,6 +8,26 @@ if hash kubectl 2>/dev/null; then
 else
 	echo "missing kubectl"
 fi
+
+# aliases
+
+# ls
+alias ll='ls -la'
+alias lll='ls -la'
+alias l='ls -la'
+
+# Save retype time
+alias דך='ls'
+alias ךך='ls -la'
+alias ךד -ךש='ls -la'
+
+alias grep='grep --color=always'
+
+# Git
+alias commit='git commit -m '
+
+
+# PATH
 
 # hash kubectl 2>/dev/null || { echo >&2 "I require kubectl but it's not installed.";}
 

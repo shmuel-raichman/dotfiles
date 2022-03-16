@@ -1,6 +1,10 @@
 #!/bin/bash
 # B"H
 
+
+source <(helm completion bash) # setup autocomplete for helm
+source <(kind completion bash) # setup autocomplete for kind
+source <(istioctl completion bash) # setup autocomplete for istioctl
 source <(kubectl completion bash) # setup autocomplete for kubectl
 alias k=kubectl
 complete -F __start_kubectl k
@@ -24,20 +28,11 @@ _get_clusters_contexts_completions()
 complete -F _get_clusters_contexts_completions set_cluster
 # Set alias of kubectl command for changing clusters.
 alias set_cluster='kubectl config use-context'
-# #################################################################
-# Old switch cluster command (hard coded).
-# #################################################################
-alias switchPrd='kubectl config use-context prod-context'
-#############################################################################################################################
-# DEPRECATED
-# DEPRECATED
-#function updateKubeConfig(){
-#	wd=$(pwd)
-#	echo $wd
-#	cd /home/shmuelra/scripts/update.kubectl.token
-#	node app.js
-#	cd $wd
-#}
+
+###
+# Login to new clusters
+### 
+
 
 
 # Namespaces
@@ -53,58 +48,3 @@ complete -F _get_namespaces_completions set_namespace
 
 #alias set_namespace='kubectl config set-context $(kubectl config current-context) --namespace='
 alias set_namespace='kubectl config set-context --current --namespace'
-#############################################################################################################################
-# DEPRECATED
-#function setNamespace(){
-#	namespace=$1
-#	kubectl config set-context $(kubectl config current-context) --namespace=$namespace
-#	#kubectl config view --minify | grep namespace # | awk '{print $1" "$2}'
-#}
-
-# Not sure but there is some escaping before end of the line
-alias getCurrentNamespace='kubectl config view --minify | grep namespace | awk '\''{print $1" "$2}'\'''
-#############################################################################################################################
-
-# Get 
-alias getPods='kubectl get pods'
-alias get='kubectl get'
-alias getConfig='kubectl get configmaps'
-alias getDeploy='kubectl get deployments'
-alias getSvc='kubectl get svc'
-alias getIng='kubectl get ing'
-
-
-# While pod status is not running get pods by grep search term.
-function getPodsStatus (){
-	searchTerm=$1
-	while [[ $(getAllPods | grep $searchTerm | awk '{print $4}') != "Running" ]]; 
-		do getAllPods | grep $searchTerm
-		sleep 2
-	done;
-
-	getAllPods | grep $searchTerm
-}
-
-# Get All Namespaces
-alias getAllPods='kubectl get pods --all-namespaces'
-alias getAll='kubectl get --all-namespaces'
-alias getAllConfig='kubectl get configmaps --all-namespaces'
-alias getAllDeploy='kubectl get deployments --all-namespaces'
-alias getAllSvc='kubectl get svc --all-namespaces'
-alias getAllIng='kubectl get ing --all-namespaces'
-
-function getPodsByExpretion(){
-	grepExpretion=$1
-	kubectl get pods --all-namespaces | grep --color=always $grepExpretion
-}
-
-# Describe
-alias describePod='kubectl describe pod'
-alias describeDeployment='kubectl describe deployments'
-alias describeSvc='kubectl describe svc'
-alias describe='kubectl describe'
-
-
-#
-alias getLogs='kubectl logs '
-alias kubeExec='kubectl exec -it '

@@ -4,21 +4,11 @@ LIGTH_RED_COLOR="\001\033[91m\002"
 CAYN_COLOR="\001\033[36m\002"
 RESET_COLOR_K8S="\001\033[00m\002"
 
+
 k8s_ps1()
 {
-    if ! hash kubectl 2>/dev/null;
-        then
-            # echo "No context";
-            k8s_ps1="No context"
-    elif kubectl config current-context 2>&1 | grep -q 'error' ;
-        then
-        k8s_ps1="No context"
-    elif [ "$K8S_PS1_ENABLED" = "false" ];
+    if [ "$K8S_PS1_ENABLED" = "false" ];
         then 
-        # echo "Disabled";
-        k8s_ps1="disabled"
-    elif kubectl version 2>&1 | grep -q 'error' ;
-        then
         # echo "Disabled";
         k8s_ps1="disabled"
     else
@@ -29,7 +19,6 @@ k8s_ps1()
         printf $DEFAULT_K8S_PS1
     fi
 }
-
 
 enable_k8s_ps1()
 {
