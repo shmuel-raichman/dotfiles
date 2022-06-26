@@ -5,7 +5,7 @@
 source ~/dotfiles/k8s/prompt-k8s.bash
 source ~/dotfiles/k8s/k8s-prompt-state.bash
 ### 
-source ~/dotfiles/prompt.bash``
+source ~/dotfiles/prompt.bash
 
 command -v kubectl >/dev/null 2>&1 && { 
 	source ~/dotfiles/k8s/k8s-aliases.bash
