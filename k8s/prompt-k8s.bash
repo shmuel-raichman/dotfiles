@@ -7,7 +7,7 @@ RESET_COLOR_K8S="\001\033[00m\002"
 
 __k8s_ps1()
 {
-    if [ "$K8S_PS1_ENABLED" = "true" ];
+    if [ "$K8S_PS1_ENABLED" = "true" ]; then
         local current_context=$(kubectl config current-context)
         local current_namespace=$(kubectl config view --minify | grep namespace | awk '{print $2}')
 

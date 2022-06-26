@@ -10,7 +10,7 @@ GCP_PROJECT_LIST_FILENAME="gcloud-project-list"
 GCP_PROJECT_LIST_BASE_PATH="$HOME/dotfiles/resources"
 GCP_PROJECT_LIST_PATH="$GCP_PROJECT_LIST_BASE_PATH/$GCP_PROJECT_LIST_FILENAME"
 
-mkdir $GCP_PROJECT_LIST_BASE_PATH
+[ -d $GCP_PROJECT_LIST_BASE_PATH ] || mkdir -p $GCP_PROJECT_LIST_BASE_PATH
 
 alias listvms='gcloud compute instances list --format="table[box,title=Instances](name:sort=1, zone:label=zone, status, networkInterfaces.networkIP)"'
 
