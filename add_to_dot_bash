@@ -1,3 +1,0 @@
-if [ -f ~/dotfiles/.bash_customize ]; then
-     . ~/dotfiles/.bash_customize 
-fi

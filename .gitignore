@@ -1,13 +1,27 @@
 # B"H
 
 *
-!.vimrc
-!.bash_kube_aliases
-!.bash_customize
-!.bash_general_aliases
-!.bash_ps1
-!.gitconfig
+!k8s
+!fzf 
+k8s/*
+fzf/*
+
+!k8s/k8s-prompt-state.bash
+!k8s/prompt-k8s.bash
+!k8s/helmfile-autocomplete.bash
+!k8s/k8s-aliases.bash
+!gitignore
+!prompt.bash
+!add-to-dot-bash
+!fzf/key-bindings.bash
+!fzf/gcloud.bash
+!fzf/fzf-hist.bash
+!fzf/fzf.bash
+!fzf/completion.bash
+!fzf/kube.bash
+!fzf/forgit.bash
 !.gitignore
-!.bash_k8s_ps1
+!archive/.gitconfig
+!archive/.vimrc
 !README.md
-!add_to_dot_bash
+!customize.bash
