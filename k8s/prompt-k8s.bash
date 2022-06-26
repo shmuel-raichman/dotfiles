@@ -18,17 +18,17 @@ __k8s_ps1()
 
 enable_k8s_ps1()
 {
-    echo "K8S_PS1_ENABLED=true" > ~/dotfiles/k8s/k8s-ps1-state.bash
-    . ~/dotfiles/k8s/ps1-state.bash
-    . ~/dotfiles/.bash_customize
+    echo "K8S_PS1_ENABLED=true" > ~/dotfiles/k8s/k8s-prompt-state.bash
+    . ~/dotfiles/k8s/k8s-prompt-state.bash
+    . ~/dotfiles/customize.bash
 }
 
 
 disable_k8s_ps1()
 {
-    echo "K8S_PS1_ENABLED=false" > ~/dotfiles/k8s/k8s-ps1-state.bash
-    . ~/dotfiles/k8s/ps1-state.bash
-    . ~/dotfiles/.bash_customize
+    echo "K8S_PS1_ENABLED=false" > ~/dotfiles/k8s/k8s-prompt-state.bash
+    . ~/dotfiles/k8s/k8s-prompt-state.bash
+    . ~/dotfiles/customize.bash
 }
 
 
