@@ -3,7 +3,14 @@
 
 # Config
 # 
-function Knamespace_in_cluster()
+__KGet_namespaces()
+{
+    local ns="$(kubectl get ns | awk ' NR> 1 {print $1}' | fzf)"
+    echo ${ns}
+}
+
+
+Knamespace_in_cluster()
 {
     local cont="$(kubectl config get-contexts -o name | fzf)"
     local ns="$(kubectl get ns --context=${cont} | awk ' NR> 1 {print $1}' | fzf)"

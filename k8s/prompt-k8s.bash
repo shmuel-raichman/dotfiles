@@ -11,8 +11,8 @@ __k8s_ps1()
         local current_context=$(kubectl config current-context)
         local current_namespace=$(kubectl config view --minify | grep namespace | awk '{print $2}')
 
-        DEFAULT_K8S_PS1=" [$LIGTH_RED_COLOR$current_context$RESET_COLOR_K8S:$CAYN_COLOR$current_namespace$RESET_COLOR_K8S] "
-        printf $DEFAULT_K8S_PS1
+        DEFAULT_K8S_PS1=" [${LIGTH_RED_COLOR}${current_context}${RESET_COLOR_K8S}:${CAYN_COLOR}${current_namespace}${RESET_COLOR_K8S}] "
+        printf ${DEFAULT_K8S_PS1}
     fi
 }
 

@@ -14,28 +14,48 @@ GCP_PROJECT_LIST_PATH="$GCP_PROJECT_LIST_BASE_PATH/$GCP_PROJECT_LIST_FILENAME"
 
 alias listvms='gcloud compute instances list --format="table[box,title=Instances](name:sort=1, zone:label=zone, status, networkInterfaces.networkIP)"'
 
-GCPUpdateProjectsList(){
+__GCPConfigGetProject(){
+    # echo "__GCPConfigGetProject"
+    project=$(cat $GCP_PROJECT_LIST_PATH | awk ' NR > 1 {print}' | fzf | awk '{print $1}')
+    echo ${project}
+}
+
+
+__GCPUpdateProjectsList(){
     echo "GCPUpdateProjectsList"
     gcloud projects list > $GCP_PROJECT_LIST_PATH
 }
 
+
+GCPConnectToGKECluster(){
+    region=${1:-us-central1}
+    project="$(__GCPConfigGetProject)"
+    cluster_name=$(gcloud container clusters list --project=${project} | awk 'NR > 1 {print}' | fzf | awk '{print $1}')
+
+    gcloud container clusters get-credentials ${cluster_name} --region ${region} --project ${project} 
+    kubectl config set-context --current --namespace $(__KGet_namespaces)
+}
+
+
 GCPConfigSetProject(){
     echo "GCPConfigSetProject"
-    project=$(cat $GCP_PROJECT_LIST_PATH | awk ' NR > 1 {print}' | fzf | awk '{print $1}')
-    gcloud config set project $project
+    project=$(__GCPConfigGetProject)
+    gcloud config set project ${project}
 }
+
 
 GCPSearchInstance()
 {
-    project=$(cat $GCP_PROJECT_LIST_PATH | awk ' NR > 1 {print}' | fzf | awk '{print $1}')
+    project=$(__GCPConfigGetProject)
     echo "Project: $project"
 
     gcloud compute instances list --project="$project" --format="table[box,title=Instances](name:sort=1, zone:label=zone, status, networkInterfaces.networkIP)" | fzf
 }
 
+
 GCPSSHInstance()
 {
-    project=$(cat $GCP_PROJECT_LIST_PATH | awk ' NR > 1 {print}' | awk ' NR > 1 {print}' | fzf | awk '{print $1}')
+    project=$(__GCPConfigGetProject)
     user={$1:-"shmuel"}
     echo "Project: $project"
 
