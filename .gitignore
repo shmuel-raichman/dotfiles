@@ -8,7 +8,7 @@ k8s/*
 fzf/*
 resources/*
 
-!k8s/k8s-prompt-state.bash
+k8s/k8s-prompt-state.bash
 !k8s/prompt-k8s.bash
 !k8s/helmfile-autocomplete.bash
 !k8s/k8s-aliases.bash

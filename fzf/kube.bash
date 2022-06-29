@@ -9,6 +9,11 @@ __KGet_namespaces()
     echo ${ns}
 }
 
+__Kget_current_namespace()
+{
+    kubectl config view --minify | grep --color=never namespace | awk -F':' '{ gsub(/ /,""); print $2}'
+}
+
 
 Knamespace_in_cluster()
 {
@@ -17,6 +22,11 @@ Knamespace_in_cluster()
 
     kubectl config use-context ${cont}
     kubectl config set-context --current --namespace $ns
+}
+
+__get_current_context()
+{
+    kubectl config current-context
 }
 
 _get_clusters_contexts_completions()
@@ -50,6 +60,15 @@ complete -F _get_namespaces_completions namespace
 alias set_namespace='kubectl config set-context --current --namespace'
 alias namespace='kubectl config set-context --current --namespace'
 
+# Helpers
+
+__get_all_pods_current_ns_in_context()
+{
+    local context=$( kubectl config view -o jsonpath='{.contexts[*].name}' | awk -v OFS='\n' '{$1=$1}1' | fzf )
+
+    kubectl get pods --context=${context} -o wide -A | awk 'NR > 1 {print}'
+}
+
 
 # Pods
 Klogp(){
@@ -77,19 +96,33 @@ Krmpa(){
 
 Ktop_all_list()
 {
+
     local context=$( kubectl config view -o jsonpath='{.contexts[*].name}' | awk -v OFS='\n' '{$1=$1}1' | fzf )
 
-    FZF_DEFAULT_COMMAND="kubectl get pods -o wide -A | awk 'NR > 1 {print}'"
-        fzf --preview-window down,1,border-horizontal 
+    
+    FZF_DEFAULT_COMMAND="kubectl get pods --context=${context} -o wide -A | awk 'NR > 1 {print}'" \
+        fzf --bind "enter:execute:kubectl exec -it -n {1} --context ${context} {2} -- bash > /dev/tty" \
+            --bind "ctrl-r:reload:kubectl get pods --context=${context} -o wide -A | awk 'NR > 1 {print}'" \
+            --preview-window down,2,border-horizontal \
             --preview "kubectl top pod --context ${context} --namespace {1} {2}" "$@" \
-            --color 'fg:#bbccdd,fg+:#ddeeff,bg:#334455,preview-bg:#223344,border:#778899' \
-            --bind "enter:execute:kubectl exec -it -n {1} --context ${context} {2} -- bash > /dev/tty" \
-            --bind 'ctrl-r:reload:$FZF_DEFAULT_COMMAND'
+            --color 'fg:#bbccdd,fg+:#ddeeff,bg:#334455,preview-bg:#223344,border:#778899'
 }
 
 
+# Ktop_all_list()
+# {
 
-Kpods() {
+#     FZF_DEFAULT_COMMAND="__get_all_pods_current_ns_in_context" \
+#         fzf --preview-window down,2,border-horizontal \
+#             --preview "kubectl top pod --context ${context} --namespace {1} {2}" "$@" \
+#             --color 'fg:#bbccdd,fg+:#ddeeff,bg:#334455,preview-bg:#223344,border:#778899' \
+#             --bind "enter:execute:kubectl exec -it -n {1} --context ${context} {2} -- bash > /dev/tty" \
+#             --bind 'ctrl-r:reload:($FZF_DEFAULT_COMMAND)'
+# }
+
+
+
+Kpodsa() {
 FZF_DEFAULT_COMMAND="kubectl get pods --all-namespaces" \
     fzf --info=inline --layout=reverse --header-lines=1 \
         --prompt "$(kubectl config current-context | sed 's/-context$//')> " \
@@ -103,7 +136,20 @@ FZF_DEFAULT_COMMAND="kubectl get pods --all-namespaces" \
 }
 
 
-Kpodsn() {
+Kpods() {
+FZF_DEFAULT_COMMAND="kubectl get pods" \
+    fzf --info=inline --layout=reverse --header-lines=1 \
+        --prompt "$(kubectl config current-context | sed 's/-context$//'):$(kubectl config view --minify | grep namespace | awk '{print $2}')> " \
+        --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
+        --bind 'ctrl-/:change-preview-window(80%,border-bottom|hidden|)' \
+        --bind 'enter:execute:kubectl exec -it {1} -- bash > /dev/tty' \
+        --bind 'ctrl-o:execute:${EDITOR:-vim} <(kubectl logs --all-containers {1}) > /dev/tty' \
+        --bind 'ctrl-r:reload:$FZF_DEFAULT_COMMAND' \
+        --preview-window up:follow \
+        --preview 'kubectl logs --follow --all-containers --tail=10000 {1}' "$@"
+}
+
+KPods() {
 FZF_DEFAULT_COMMAND="kubectl get pods" \
     fzf --info=inline --layout=reverse --header-lines=1 \
         --prompt "$(kubectl config current-context | sed 's/-context$//'):$(kubectl config view --minify | grep namespace | awk '{print $2}')> " \
@@ -117,6 +163,7 @@ FZF_DEFAULT_COMMAND="kubectl get pods" \
 }
 
 
+
 Klogs_in_cluster_in_ns() {
 
     local context=$( kubectl config view -o jsonpath='{.contexts[*].name}' | awk -v OFS='\n' '{$1=$1}1' | fzf )
@@ -128,14 +175,18 @@ Klogs_in_cluster_in_ns() {
     FZF_DEFAULT_COMMAND="kubectl get pods -n ${ns} --context=${context}" \
     fzf --info=inline --layout=reverse --header-lines=1 \
         --prompt "${context}:${ns}> " \
-        --header $'╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
-        --bind 'ctrl-/:change-preview-window(80%,border-bottom|hidden|)' \
+        --header $'\n╱ Enter (kubectl exec) ╱ CTRL-O (open log in editor) ╱ CTRL-R (reload) ╱\n\n' \
+        --bind '?:change-preview-window(80%,border-bottom|hidden|)' \
         --bind "enter:execute:kubectl exec -it -n ${ns} --context ${context} {1} -- bash > /dev/tty" \
         --bind "ctrl-o:execute:${EDITOR:-vim} <(kubectl logs -n ${ns} --context ${context} --all-containers {1}) > /dev/tty" \
         --bind "ctrl-r:reload:kubectl get pods -n ${ns} --context=${context}" \
+        --bind '?:toggle-preview' \
         --preview-window up:follow \
         --preview "kubectl logs --follow -n ${ns} --context ${context} --all-containers --tail=10000 {1}" "$@"
 }
+
+
+
 
 
 # Klogs_in_cluster_in_ns() {
