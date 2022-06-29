@@ -3,10 +3,20 @@
 *
 !k8s
 !fzf
-!resources 
+!utils
+utils/*
+!utils/colors
+!utils/shell-functions
+!utils/state-files
+# !resources
+ 
 k8s/*
 fzf/*
-resources/*
+#utils/*
+utils/state-files/*
+utils/shell-functions/*
+utils/colors/*
+#resources/*
 
 k8s/k8s-prompt-state.bash
 !k8s/prompt-k8s.bash
@@ -22,7 +32,12 @@ k8s/k8s-prompt-state.bash
 !fzf/completion.bash
 !fzf/kube.bash
 !fzf/forgit.bash
-!resources/colors.py
+!utils/colors/colors-codes.bash
+!utils/colors/bg-colors.py
+!utils/colors/colors.py
+!utils/shell-functions/prompt-utils.bash
+!utils/state-files/k8s-prompt-state.bash
+!utils/state-files/prompt-state.bash
 !.gitignore
 !archive/.gitconfig
 !archive/.vimrc
