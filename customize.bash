@@ -14,11 +14,13 @@ source ~/dotfiles/prompt.bash
 
 command -v kubectl >/dev/null 2>&1 && { 
 	source ~/dotfiles/k8s/k8s-aliases.bash
-}
+} || K8S_PS1_ENABLED=false
 
 command -v helmfile >/dev/null 2>&1 && { 
 	source ~/dotfiles/k8s/helmfile-autocomplete.bash
 }
+
+command -v __git_ps1 >/dev/null 2>&1 || source $(find /usr/ -iname git-sh-prompt) || true
 
 command -v fzf >/dev/null 2>&1 && { 
 	echo "FZF Exist sourcing fzf functions .."
@@ -26,10 +28,10 @@ command -v fzf >/dev/null 2>&1 && {
 	source ~/dotfiles/fzf/fzf.bash
 	source ~/dotfiles/fzf/completion.bash
 	source ~/dotfiles/fzf/key-bindings.bash
-	source ~/dotfiles/fzf/forgit.bash
-	source ~/dotfiles/fzf/kube.bash
-	source ~/dotfiles/fzf/gcloud.bash
-	source ~/dotfiles/fzf/gcloud.bash
+	command -v git >/dev/null 2>&1 && source ~/dotfiles/fzf/forgit.bash
+	command -v kubectl >/dev/null 2>&1 && source ~/dotfiles/fzf/kube.bash
+	command -v gcloud >/dev/null 2>&1 && source ~/dotfiles/fzf/gcloud.bash
+
 }
 
 # aliases

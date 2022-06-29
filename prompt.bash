@@ -18,7 +18,8 @@ GIT_BRANCH_COLOR=$(__color ${GREEN_RANGE_36})
 
 
 # Prompt Colored Data
-[ "$SHOW_GIT_BRANCH" != "false" ] && GIT_BRANCH_COLORED="${GIT_BRANCH_COLOR}\$(__git_ps1)${RESET_COLOR}"
+command -v __git_ps1 >/dev/null 2>&1 || SHOW_GIT_BRANCH=false
+[ "$SHOW_GIT_BRANCH" != "false" ] && GIT_BRANCH_COLORED="${GIT_BRANCH_COLOR}\$(__git_ps1)${RESET_COLOR}" || GIT_BRANCH_COLORED=""
 # Include prompt special character
 USER_AND_COLORED="$(__prompt_user)$(__prompt_hostname)"
 
