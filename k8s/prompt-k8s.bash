@@ -1,8 +1,12 @@
 #!/bin/bash
 # B"H
-LIGTH_RED_COLOR="\001\033[91m\002"
-CAYN_COLOR="\001\033[36m\002"
-RESET_COLOR_K8S="\001\033[00m\002"
+# LIGTH_RED_COLOR="\001\033[91m\002"
+# CAYN_COLOR="\001\033[36m\002"
+# RESET_COLOR_K8S="\001\033[00m\002"
+
+LIGTH_RED_COLOR=$(__color_a 91)
+CAYN_COLOR=$(__color_a 33)
+RESET_COLOR_K8S=$RESET_COLORS_A
 
 
 __k8s_ps1()
@@ -11,8 +15,11 @@ __k8s_ps1()
         local current_context=$(kubectl config current-context)
         local current_namespace=$(kubectl config view --minify | grep namespace | awk '{print $2}')
 
-        DEFAULT_K8S_PS1=" [${LIGTH_RED_COLOR}${current_context}${RESET_COLOR_K8S}:${CAYN_COLOR}${current_namespace}${RESET_COLOR_K8S}] "
-        printf ${DEFAULT_K8S_PS1}
+        K8S_PS1_CONTEXT="${LIGTH_RED_COLOR}${current_context}${RESET_COLORS_A}"
+        K8S_PS1_NAMESPACE="${CAYN_COLOR}${current_namespace}${RESET_COLORS_A}"
+        K8S_PS1="$RESET_COLORS_A[${K8S_PS1_CONTEXT}:${K8S_PS1_NAMESPACE}]"
+
+        echo -e ${K8S_PS1}
     fi
 }
 

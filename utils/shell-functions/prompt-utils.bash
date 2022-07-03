@@ -14,6 +14,22 @@ __prompt_time()
     echo -e "${TIME}" 
 }
 
+
+__exit_code()
+{
+    exit_code=${?}
+    ERR_EXIT_COLOR=$(__color_a 46)
+    GOOD_EXIT_COLOR=$(__color_a 46)
+    EXIT_COLOR=""
+    if [ "$exit_code" = "0" ]; then
+        EXIT_COLOR=$GOOD_EXIT_COLOR
+    else
+        EXIT_COLOR=$ERR_EXIT_COLOR
+    fi
+    colored_exit=${EXIT_COLOR}${exit_code}${RESET_COLORS_A}
+    echo -e [${colored_exit}]
+}
+
 __prompt_hostname()
 {
     [ "$SHOW_HOSTNAME" != "false" ] && { 

@@ -2,11 +2,11 @@
 # B"H
 
 ### Order is importent here
+source ~/dotfiles/utils/colors/colors-codes.bash
 # Enable k8s prompt
 source ~/dotfiles/k8s/prompt-k8s.bash
 source ~/dotfiles/utils/state-files/k8s-prompt-state.bash
 ### Order is importent here
-source ~/dotfiles/utils/colors/colors-codes.bash
 source ~/dotfiles/utils/state-files/prompt-state.bash
 source ~/dotfiles/utils/shell-functions/prompt-utils.bash
 source ~/dotfiles/prompt.bash
