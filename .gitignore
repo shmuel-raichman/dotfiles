@@ -8,7 +8,7 @@ utils/*
 !utils/colors
 !utils/shell-functions
 !utils/state-files
-# !resources
+!resources
  
 k8s/*
 fzf/*
@@ -16,7 +16,7 @@ fzf/*
 utils/state-files/*
 utils/shell-functions/*
 utils/colors/*
-#resources/*
+resources/*
 
 k8s/k8s-prompt-state.bash
 !k8s/prompt-k8s.bash
@@ -38,6 +38,7 @@ k8s/k8s-prompt-state.bash
 !utils/shell-functions/prompt-utils.bash
 !utils/state-files/k8s-prompt-state.bash
 !utils/state-files/prompt-state.bash
+!resources/emojis-list.txt
 !.gitignore
 !archive/.gitconfig
 !archive/.vimrc
