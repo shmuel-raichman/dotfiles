@@ -26,7 +26,7 @@ USER_AND_COLORED="$(__prompt_user)$(__prompt_hostname)"
 
 WORKDIR="${WD_COLOR}\w${RESET_COLORS_A}"
 
-PS1_FIRST_LINE="\$(__exit_code)$(__k8s_ps1) ${WORKDIR}  ${GIT_BRANCH_COLORED} "
+PS1_FIRST_LINE="\$(__exit_code)\$(__k8s_ps1) ${WORKDIR}  ${GIT_BRANCH_COLORED} "
 PS1_SECOND_LINE="\$(__prompt_time) ${USER_AND_COLORED}:$ "
 
 # Final prompt

@@ -1,43 +1,68 @@
 #!/bin/bash
 # B"H
 
-# Config
+CACHE_BASE_PATH="$HOME/dotfiles/resources"
+CACHE_NAMESPACE_FILENAME="k8s-namespaces-list"
+# Internl
 # 
+
+# Get namespace from cache pass context to get diffrent context namespaces
+# Default current
 __KGet_namespaces()
 {
-    local ns="$(kubectl get ns | awk ' NR> 1 {print $1}' | fzf)"
-    echo ${ns}
+    context=$1
+    context=${context:=$(kubectl config current-context)}
+    cat "$CACHE_BASE_PATH/$CACHE_NAMESPACE_FILENAME" | \
+        grep ${context} | \
+        awk '{print $2 }' | fzf
 }
 
-__Kget_current_namespace()
+# Cache namespaces from all clusters in kube config in local file.
+__KCacheNamespacesList()
 {
-    kubectl config view --minify | grep --color=never namespace | awk -F':' '{ gsub(/ /,""); print $2}'
+    echo "Running: __KCacheNamespacesList"
+    date "+%d-%m-%Y %H-%M-%S" > "$CACHE_BASE_PATH/k8s-namespaces-list"
+
+    echo "This update might take few minutes."
+    # For each context in kube config 
+    # Get all namespaces an print into a file with context prefix
+    for context in $(kubectl config get-contexts -o name); do 
+        kubectl get ns --context=${context} | awk -v context=$context  'NR>1 {print context": "$1}' \
+            >> "$CACHE_BASE_PATH/$CACHE_NAMESPACE_FILENAME"
+    done
+
+}
+
+__KGet_current_namespace()
+{
+    # kubectl config view --minify | grep --color=never namespace | awk -F':' '{ gsub(/ /,""); print $2}'
+    kubectl config view --minify -o template='{{ (index .contexts 0).context.namespace }}'
 }
 
 
-Knamespace_in_cluster()
+KNamespace_in_cluster()
 {
     local cont="$(kubectl config get-contexts -o name | fzf)"
-    local ns="$(kubectl get ns --context=${cont} | awk ' NR> 1 {print $1}' | fzf)"
+    local ns="$(__KGet_namespaces ${cont})"
 
     kubectl config use-context ${cont}
-    kubectl config set-context --current --namespace $ns
+    kubectl config set-context --current --namespace ${ns}
 }
 
-__get_current_context()
+KGet_current_context()
 {
     kubectl config current-context
 }
 
-_get_clusters_contexts_completions()
+__get_clusters_contexts_completions()
 {
         # COMPREPLY=($(compgen -W "$(kubectl config view -o jsonpath='{.contexts[*].name}') | fzf " -- "${COMP_WORDS[1]}"))
         COMPREPLY=($(compgen -W "$( kubectl config get-contexts -o name | fzf ) " -- "${COMP_WORDS[1]}"))
 }
 # Set a command to execute the complete function.
 # complete -F [complete_function] [command]
-complete -F _get_clusters_contexts_completions set_cluster
-complete -F _get_clusters_contexts_completions cluster
+complete -F __get_clusters_contexts_completions set_cluster
+complete -F __get_clusters_contexts_completions cluster
 # Set alias of kubectl command for changing clusters.
 alias set_cluster='kubectl config use-context'
 alias cluster='kubectl config use-context'
@@ -46,22 +71,37 @@ alias cluster='kubectl config use-context'
 
 # Namespaces
 # ###############################################################################################################
-# New switch namespace command.
+# switch namespace command.
 # ###############################################################################################################
-# See line 21 for explenation.
-_get_namespaces_completions()
+__get_namespaces_completions()
 {
-        COMPREPLY=($(compgen -W "$(kubectl get ns | awk ' NR> 1 {print $1}' | fzf )" -- "${COMP_WORDS[1]}"))
+        COMPREPLY=($(compgen -W "$(__KGet_namespaces)" -- "${COMP_WORDS[1]}"))
 }
-complete -F _get_namespaces_completions set_namespace
-complete -F _get_namespaces_completions namespace
+complete -F __get_namespaces_completions set_namespace
+complete -F __get_namespaces_completions namespace
 
 #alias set_namespace='kubectl config set-context $(kubectl config current-context) --namespace='
 alias set_namespace='kubectl config set-context --current --namespace'
 alias namespace='kubectl config set-context --current --namespace'
 
-# Helpers
 
+# Pods
+# ###############################################################################################################
+# New switch namespace command.
+# ###############################################################################################################
+__et_namespaces_completions()
+{
+        COMPREPLY=($(compgen -W "$(__KGet_namespaces)" -- "${COMP_WORDS[1]}"))
+}
+# complete -F __get_namespaces_completions set_namespace
+# complete -F __get_namespaces_completions namespace
+
+#alias set_namespace='kubectl config set-context $(kubectl config current-context) --namespace='
+# alias set_namespace='kubectl config set-context --current --namespace'
+# alias namespace='kubectl config set-context --current --namespace'
+
+
+# Helpers
 __get_all_pods_current_ns_in_context()
 {
     local context=$( kubectl config view -o jsonpath='{.contexts[*].name}' | awk -v OFS='\n' '{$1=$1}1' | fzf )
@@ -167,7 +207,7 @@ FZF_DEFAULT_COMMAND="kubectl get pods" \
 Klogs_in_cluster_in_ns() {
 
     local context=$( kubectl config view -o jsonpath='{.contexts[*].name}' | awk -v OFS='\n' '{$1=$1}1' | fzf )
-    local ns=$(kubectl get ns --context ${context} | awk ' NR> 1 {print $1}' | fzf)
+    local ns=$(__KGet_namespaces ${context})
     local extra_print=""
     [ $(kubectl get pods -n ${ns} --context=${context} | wc -l ) = "0" ] && extra_print="No pods found in namespace ${ns}"
     # namespace
@@ -192,7 +232,7 @@ Klogs_in_cluster_in_ns() {
 # Klogs_in_cluster_in_ns() {
 
 #     local context=$( kubectl config view -o jsonpath='{.contexts[*].name}' | awk -v OFS='\n' '{$1=$1}1' | fzf )
-#     local ns=$(kubectl get ns --context ${context} | awk ' NR> 1 {print $1}' | fzf)
+#     local ns=$(__KGet_namespaces ${context})
 #     local extra_print=""
 #     [ $(kubectl get pods -n ${ns} --context=${context} | wc -l ) = "0" ] && extra_print="No pods found in namespace ${ns}"
 #     # namespace

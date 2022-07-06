@@ -36,9 +36,10 @@ command -v fzf >/dev/null 2>&1 && {
 
 # aliases
 
-alias Addhost='sudo vim /etc/hosts'
+alias hosts='sudo vim /etc/hosts'
 alias rc='source ~/.bashrc'
-alias Copy='xclip -r -sel clip'
+alias apt='sudo apt'
+
 
 # ls
 alias ll='ls -la'
@@ -50,7 +51,12 @@ alias grep='grep --color=always'
 # Git
 alias commit='git commit -m '
 
+# Extra
+alias Copy='xclip -r -sel clip'
 
+
+
+export STARSHIP_CONFIG=$HOME/dotfiles/config/starship/defalut.toml
 
 
 # hash kubectl 2>/dev/null || { echo >&2 "I require kubectl but it's not installed.";}
