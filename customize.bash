@@ -2,11 +2,11 @@
 # B"H
 
 ### Order is importent here
+source ~/dotfiles/utils/colors/colors-codes.bash
 # Enable k8s prompt
 source ~/dotfiles/k8s/prompt-k8s.bash
 source ~/dotfiles/utils/state-files/k8s-prompt-state.bash
 ### Order is importent here
-source ~/dotfiles/utils/colors/colors-codes.bash
 source ~/dotfiles/utils/state-files/prompt-state.bash
 source ~/dotfiles/utils/shell-functions/prompt-utils.bash
 source ~/dotfiles/prompt.bash
@@ -40,9 +40,10 @@ command -v fd >/dev/null 2>&1 && {
 
 # aliases
 
-alias Addhost='sudo vim /etc/hosts'
+alias hosts='sudo vim /etc/hosts'
 alias rc='source ~/.bashrc'
-alias Copy='xclip -r -sel clip'
+alias apt='sudo apt'
+
 
 # ls
 alias ll='ls -la'
@@ -54,7 +55,12 @@ alias grep='grep --color=always'
 # Git
 alias commit='git commit -m '
 
+# Extra
+alias Copy='xclip -r -sel clip'
 
+
+
+export STARSHIP_CONFIG=$HOME/dotfiles/config/starship/defalut.toml
 
 
 # hash kubectl 2>/dev/null || { echo >&2 "I require kubectl but it's not installed.";}

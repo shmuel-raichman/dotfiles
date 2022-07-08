@@ -41,17 +41,15 @@ export FZF_DEFAULT_OPTS="
 --info=inline
 --height=100%
 --multi
---preview-window=:hidden
 --color='bg+:#3F3F3F,bg:#4B4B4B,border:#6B6B6B,spinner:#98BC99,hl:#719872,fg:#D9D9D9,header:#719872,info:#BDBB72,pointer:#E12672,marker:#E17899,fg+:#D9D9D9,preview-bg:#3F3F3F,prompt:#98BEDE,hl+:#98BC99'
 --layout=reverse 
 --border 
 --margin=1 
 --padding=1
---preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) \
-     || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
+--preview '([[ -f {} ]] && (bat --style=numbers --color=always {} || cat {})) || ([[ -d {} ]] && (tree -C {} | less)) || echo {} 2> /dev/null | head -200'
 --prompt='∼ ' --pointer='▶' --marker='✓'
---header '╱ CTRL-y (Copy xclip) ╱ CTRL-e (Open in vim) ╱ CTRL-v (Open in VSCode) ╱ Lshift-? (toggle preview) ╱' \
---bind '?:toggle-preview'
+--header '╱ CTRL-y (Copy xclip) ╱ CTRL-e (Open in vim) ╱ CTRL-v (Open in VSCode) ╱ Lshift-? (toggle preview) ╱'
+--bind '?:change-preview-window(hidden|20%|40%|60%|80%|20%,down|40%,down|60%,down|80%,down|20%,left|40%,left|60%,left|80%,left|20%,right|40%,right|60%,right|80%,right)'
 --bind 'ctrl-a:select-all'
 --bind 'ctrl-y:execute-silent(echo {+} | xclip -r -sel clip)'
 --bind 'ctrl-e:execute(echo {+} | xargs -o vim)'
