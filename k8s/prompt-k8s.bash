@@ -3,6 +3,7 @@
 LIGTH_RED_COLOR="\001\033[91m\002"
 CAYN_COLOR="\001\033[36m\002"
 RESET_COLOR_K8S="\001\033[00m\002"
+K8S_PS1_STATE_FILE="$HOME/dotfiles/utils/state-files/k8s-prompt-state.bash"
 
 
 __k8s_ps1()
@@ -18,16 +19,16 @@ __k8s_ps1()
 
 enable_k8s_ps1()
 {
-    echo "K8S_PS1_ENABLED=true" > ~/dotfiles/k8s/k8s-prompt-state.bash
-    . ~/dotfiles/k8s/k8s-prompt-state.bash
+    echo "K8S_PS1_ENABLED=true" > ${K8S_PS1_STATE_FILE}
+    . ${K8S_PS1_STATE_FILE}
     . ~/dotfiles/customize.bash
 }
 
 
 disable_k8s_ps1()
 {
-    echo "K8S_PS1_ENABLED=false" > ~/dotfiles/k8s/k8s-prompt-state.bash
-    . ~/dotfiles/k8s/k8s-prompt-state.bash
+    echo "K8S_PS1_ENABLED=false" > ${K8S_PS1_STATE_FILE}
+    . ${K8S_PS1_STATE_FILE}
     . ~/dotfiles/customize.bash
 }
 
