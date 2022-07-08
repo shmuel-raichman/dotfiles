@@ -34,6 +34,10 @@ command -v fzf >/dev/null 2>&1 && {
 
 }
 
+command -v fd >/dev/null 2>&1 && {  
+	source /opt/installs/programs/fd/autocomplete/fd.bash
+}
+
 # aliases
 
 alias Addhost='sudo vim /etc/hosts'
