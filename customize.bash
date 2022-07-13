@@ -1,51 +1,67 @@
 #!/bin/bash
 # B"H
+echo "Sourced file: " $(basename "${BASH_SOURCE}")
 
-### Order is importent here
-source ~/dotfiles/utils/colors/colors-codes.bash
-# Enable k8s prompt
-source ~/dotfiles/k8s/prompt-k8s.bash
-source ~/dotfiles/utils/state-files/k8s-prompt-state.bash
-### Order is importent here
-source ~/dotfiles/utils/state-files/prompt-state.bash
-source ~/dotfiles/utils/shell-functions/prompt-utils.bash
-source ~/dotfiles/prompt.bash
+# ### Order is importent here
+# export DF_PATHES="${DF_HOME}/utils/global-variables/global-pathes.bash"
+# ### Sourcing
+# # Global pathes sourcing
+# source ${DF_PATHES}
+# Colors
+source ${DF_COLORS_CODES_FILE}
+source ${DF_COLORS_UTILS_FILE}
+# State files
+source ${DF_STATE_FILE}
+source ${DF_PS1_STATE_FILE}
+source ${DF_PS1_K8S_STATE_FILE}
+# Prompt
+source ${DF_PS1_K8S_PROMPT_FILE}
+source ${DF_PS1_UTILS_FILE}
+source ${DF_PS1_PROMPT_FILE}
 #
 
 command -v kubectl >/dev/null 2>&1 && { 
-	source ~/dotfiles/k8s/k8s-aliases.bash
-} || K8S_PS1_ENABLED=false
+	source ${DF_K8S_ALIASES_FILE}
+	source ${DF_K8S_COMP_RELATED_FILE}
+} || echo "K8S_PS1_ENABLED=false" > ${DF_PS1_K8S_STATE_FILE}
 
-command -v helmfile >/dev/null 2>&1 && { 
-	source ~/dotfiles/k8s/helmfile-autocomplete.bash
-}
-
-command -v __git_ps1 >/dev/null 2>&1 || source $(find /usr/ -iname git-sh-prompt) || true
-
+##### fzf
+############################################################################
+################################ FZF #######################################
+############################################################################
 command -v fzf >/dev/null 2>&1 && { 
 	echo "FZF Exist sourcing fzf functions .."
 
-	source ~/dotfiles/fzf/fzf.bash
-	source ~/dotfiles/fzf/completion.bash
-	source ~/dotfiles/fzf/key-bindings.bash
-	command -v git >/dev/null 2>&1 && source ~/dotfiles/fzf/forgit.bash
-	command -v kubectl >/dev/null 2>&1 && source ~/dotfiles/fzf/kube.bash
-	command -v gcloud >/dev/null 2>&1 && source ~/dotfiles/fzf/gcloud.bash
+	source ${DF_FZF_DEFAULTS_FILE}
+	source ${DF_FZF_FS_FILE}
+	source ${DF_FZF_SOURCE_COMP_FILE}
+	source ${DF_FZF_SOURCE__KEY_BINDING_FILE}
+	# source ${DF_FZF_FS_FILE}
+	command -v git >/dev/null 2>&1 && source ${DF_FZF_SOURCE_GIT_FILE}
+	command -v kubectl >/dev/null 2>&1 && source ${DF_FZF_GCLOUD_FILE}
+	command -v gcloud >/dev/null 2>&1 && source ${DF_FZF_K8S_FILE}
 
 }
+#############################################################################
+#############################################################################
+#############################################################################
 
-# aliases
 
+### aliases
+############################################################################
+################################ aliases ###################################
+############################################################################
+# Basics
 alias hosts='sudo vim /etc/hosts'
 alias rc='source ~/.bashrc'
 alias apt='sudo apt'
 
 
-# ls
-alias ll='ls -la'
+# basic GNU
+## alias ll='ls -la'
+alias ll='exa -la --icons --group-directories-first'
 alias lll='ls -la'
 alias l='ls -la'
-
 alias grep='grep --color=always'
 
 # Git
@@ -53,19 +69,16 @@ alias commit='git commit -m '
 
 # Extra
 alias Copy='xclip -r -sel clip'
+#############################################################################
+#############################################################################
+#############################################################################
 
+# Custom Configs
+export STARSHIP_CONFIG=${DF_CONFIGS_STARSHIP_FILE}
 
-
-export STARSHIP_CONFIG=$HOME/dotfiles/config/starship/defalut.toml
-
-
-# hash kubectl 2>/dev/null || { echo >&2 "I require kubectl but it's not installed.";}
-
-# To add git colors
-# Version: 2.13
-# Add the following to your ~/.gitconfig
-#includeIf "gitdir:~/dotfiles/"]
-#  path = .gitconfig
-#
-# For eariler versions
-# export GIT_CONFIG=~/dotfiles/.gitconfig
+### TODO
+##############################################################################
+## Add check for exa and completion script
+source /opt/installs/programs/exa/completions/exa.bash
+## Test this line
+command -v __git_ps1 >/dev/null 2>&1 || source $(find /usr/ -iname git-sh-prompt) || true

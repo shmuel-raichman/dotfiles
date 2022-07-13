@@ -4,6 +4,7 @@ I use it to collect all my dotfiles, mostly bash aliases and functions i'm using
 So whenever i use new computer or vm on regular base i just clone it to $HOME, source it and here i have my custom shell
 
 # PS1 Demo
+Note: this demo is not updated to latest changes
 <!-- [![asciicast](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT.svg)](https://asciinema.org/a/elYkkn1lMWlrLpmvFE20YL5AT) -->
 ![](https://github.com/smuel1414/dotfiles/blob/files/demo/dotfile-02.gif)
 
@@ -12,7 +13,7 @@ So whenever i use new computer or vm on regular base i just clone it to $HOME, s
 # Install
 ### Run the command below: 
 ```
-cat dotfiles/add_to_dot_bash >> .bashrc
+cat dotfiles/add-to-dot-bash >> .bashrc
 ```
 Change to `~/.bashrc` or `~/.bash_profile`, if you not sure do the same for both.
 # Kuberentes PS1

@@ -1,29 +1,6 @@
 #!/bin/bash
 # B"H
-
-
-
-command -v velero >/dev/null 2>&1 && { 
-	source <(velero completion bash) # setup autocomplete for velero
-}
-
-command -v helm >/dev/null 2>&1 && { 
-    source <(helm completion bash) # setup autocomplete for helm
-}
-
-command -v kind >/dev/null 2>&1 && { 
-	source <(kind completion bash) # setup autocomplete for kind
-}
-
-command -v istioctl >/dev/null 2>&1 && { 
-	source <(istioctl completion bash) # setup autocomplete for istioctl
-}
-
-
-source <(kubectl completion bash) # setup autocomplete for kubectl
-alias k=kubectl
-complete -F __start_kubectl k
-
+echo "Sourced file: " $(basename "${BASH_SOURCE}")
 
 alias getCluster='kubectl config current-context'
 alias getClusters='kubectl config get-contexts'

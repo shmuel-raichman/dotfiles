@@ -1,1 +1,1 @@
-K8S_PS1_ENABLED=true
+K8S_PS1_ENABLED=false

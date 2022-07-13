@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # B"H
+echo "Sourced file: " $(basename "${BASH_SOURCE}")
+
 # MIT (c) Wenxuan Zhang
 
 # From offical fromgit repo

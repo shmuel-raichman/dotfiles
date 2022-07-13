@@ -1,5 +1,6 @@
 #!/bin/bash
 # B"H
+echo "Sourced file: " $(basename "${BASH_SOURCE}")
 
 # Required
 # - fzf
