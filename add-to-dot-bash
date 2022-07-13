@@ -1,3 +1,4 @@
-if [ -f ~/dotfiles/customize.bash ]; then
-     . ~/dotfiles/customize.bash 
+export DF_HOME="$HOME/dotfiles"
+if [ -f ~/dotfiles/first.bash ]; then
+     . ~/dotfiles/first.bash 
 fi

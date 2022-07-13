@@ -1,5 +1,6 @@
 #!/bin/bash
 # B"H
+echo "Sourced file: " $(basename "${BASH_SOURCE}")
 
 CACHE_BASE_PATH="$HOME/dotfiles/resources"
 CACHE_NAMESPACE_FILENAME="k8s-namespaces-list"
@@ -39,6 +40,16 @@ __KGet_current_namespace()
     kubectl config view --minify -o template='{{ (index .contexts 0).context.namespace }}'
 }
 
+
+__KComplete()
+{
+    # ${server:=localhost}
+    local reg=${1:-""}
+    local first=${2:-"get"}
+    local second=${3:-"pods"}
+    k __completeNoDesc ${first} ${second} "${reg}" | head -n -1 | fzf
+    # echo "k __completeNoDesc ${first} ${second} ${reg}"
+}
 
 KNamespace_in_cluster()
 {
@@ -94,9 +105,9 @@ alias namespace='kubectl config set-context --current --namespace'
 # ###############################################################################################################
 # New switch namespace command.
 # ###############################################################################################################
-__et_namespaces_completions()
+__get_pods_completions()
 {
-        COMPREPLY=($(compgen -W "$(__KGet_namespaces)" -- "${COMP_WORDS[1]}"))
+        COMPREPLY=($(compgen -W "$(__KComplete)" -- "${COMP_WORDS[1]}"))
 }
 # complete -F __get_namespaces_completions set_namespace
 # complete -F __get_namespaces_completions namespace

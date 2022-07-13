@@ -1,0 +1,1 @@
+KUBECTL_FZF_COMP=true

@@ -1,5 +1,6 @@
 #!/bin/bash
 # B"H
+echo "Sourced file: " $(basename "${BASH_SOURCE}")
 
 # From the offical fzf repo
 # https://github.com/junegunn/fzf/blob/master/shell/completion.bash
