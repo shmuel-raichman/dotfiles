@@ -75,3 +75,16 @@ __prompt_first_line()
     echo "HHHH$line"
 }
 # PS1_FIRST_LINE=$(printf "%*s\r%s " "$(($(tput cols)+${COMPENSATE}))" "${LEFT_PS1}" "${RIGHT_PS1}")
+
+__prompt_distro()
+{
+    [ "$SHOW_DISTRO" != "false" ] && { 
+        distro_release=$(lsb_release -r | awk '{print $2}')
+        distro_name=$(lsb_release -i | awk '{print $3}')
+        distro="${distro_name}:${distro_release}"
+        DISTRO_COLORED="${HOSTNAME_COLOR}${distro}${DF_RESET_COLORS_A}"
+        AT_COLORED="${AT_HOST_COLOR}@${DF_RESET_COLORS_A}"
+        AT_DISTRO="${AT_COLORED}${DISTRO_COLORED}"
+    }
+    echo -e "${AT_DISTRO}"
+}
