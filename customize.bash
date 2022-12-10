@@ -59,7 +59,10 @@ alias apt='sudo apt'
 
 # basic GNU
 ## alias ll='ls -la'
-alias ll='exa -la --icons --group-directories-first'
+alias ll='ls -la'
+command -v fzf >/dev/null 2>&1 && { 
+	alias ll='exa -la --icons --group-directories-first'
+}
 alias lll='ls -la'
 alias l='ls -la'
 alias grep='grep --color=always'
