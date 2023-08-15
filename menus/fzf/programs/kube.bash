@@ -29,7 +29,7 @@ __KCacheNamespacesList()
     # Get all namespaces an print into a file with context prefix
     for context in $(kubectl config get-contexts -o name); do 
         kubectl get ns --context=${context} | awk -v context=$context  'NR>1 {print context": "$1}' \
-            >> "$CACHE_BASE_PATH/$CACHE_NAMESPACE_FILENAME"
+            >> "$CACHE_BASE_PATH/$CACHE_NAMESPACE_FILENAME" || true
     done
 
 }

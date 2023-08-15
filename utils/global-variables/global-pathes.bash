@@ -33,3 +33,6 @@ export DF_FZF_SOURCE__KEY_BINDING_FILE="${DF_FZF_BASE_DIR}/source/key-bindings.b
 export DF_FZF_SOURCE_GIT_FILE="${DF_FZF_BASE_DIR}/source/forgit.bash"
 export DF_FZF_GCLOUD_FILE="${DF_FZF_BASE_DIR}/programs/gcloud.bash"
 export DF_FZF_K8S_FILE="${DF_FZF_BASE_DIR}/programs/kube.bash"
+
+# Completion scripts
+export DF_AZ_COMPLETION="${DF_HOME}/programs/az/az-completion.bash"
