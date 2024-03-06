@@ -13,6 +13,7 @@ export DF_PS1_K8S_STATE_FILE="$DF_HOME/utils/state-files/k8s-prompt-state.bash"
 export DF_K8S_COMP_RELATED_FILE="$DF_HOME/programs/k8s/k8s-related-completion.bash"
 export DF_K8S_ALIASES_FILE="$DF_HOME/programs/k8s/k8s-aliases.bash"
 export DF_PS1_K8S_PROMPT_FILE="$DF_HOME/programs/k8s/prompt-k8s.bash"
+export DF_K8S_AWS_LOGIN="$DF_HOME/programs/aws/aws-kube-profiles.bash"
 # Prompt
 export DF_PS1_PROMPT_FILE="${DF_HOME}/prompt.bash"
 # Utils
