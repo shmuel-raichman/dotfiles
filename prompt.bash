@@ -11,7 +11,7 @@ WD_COLOR=$(__color_a ${DF_PS1_WD_COLOR_CODE})
 command -v __git_ps1 >/dev/null 2>&1 || SHOW_GIT_BRANCH=false
 [ "$SHOW_GIT_BRANCH" != "false" ] && GIT_BRANCH_COLORED="${GIT_BRANCH_COLOR}\$(__git_ps1)${DF_RESET_COLOR}" || GIT_BRANCH_COLORED=""
 # Include prompt special character
-USER_AND_COLORED="$(__prompt_user)$(__prompt_hostname)"
+USER_AND_COLORED="$(__prompt_user)$(__prompt_hostname)$(__prompt_distro)"
 
 WORKDIR="${WD_COLOR}\w${DF_RESET_COLORS_A}"
 
