@@ -13,6 +13,7 @@ export DF_PS1_K8S_STATE_FILE="$DF_HOME/utils/state-files/k8s-prompt-state.bash"
 export DF_K8S_COMP_RELATED_FILE="$DF_HOME/programs/k8s/k8s-related-completion.bash"
 export DF_K8S_ALIASES_FILE="$DF_HOME/programs/k8s/k8s-aliases.bash"
 export DF_PS1_K8S_PROMPT_FILE="$DF_HOME/programs/k8s/prompt-k8s.bash"
+export DF_K8S_AWS_LOGIN="$DF_HOME/programs/aws/aws-kube-profiles.bash"
 # Prompt
 export DF_PS1_PROMPT_FILE="${DF_HOME}/prompt.bash"
 # Utils
@@ -33,3 +34,6 @@ export DF_FZF_SOURCE__KEY_BINDING_FILE="${DF_FZF_BASE_DIR}/source/key-bindings.b
 export DF_FZF_SOURCE_GIT_FILE="${DF_FZF_BASE_DIR}/source/forgit.bash"
 export DF_FZF_GCLOUD_FILE="${DF_FZF_BASE_DIR}/programs/gcloud.bash"
 export DF_FZF_K8S_FILE="${DF_FZF_BASE_DIR}/programs/kube.bash"
+
+# Completion scripts
+export DF_AZ_COMPLETION="${DF_HOME}/programs/az/az-completion.bash"

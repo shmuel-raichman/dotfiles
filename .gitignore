@@ -5,3 +5,6 @@
 archive/
 
 resources/
+.vscode/
+tmp/
+local.*

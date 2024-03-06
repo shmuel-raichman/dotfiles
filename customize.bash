@@ -20,6 +20,11 @@ source ${DF_PS1_UTILS_FILE}
 source ${DF_PS1_PROMPT_FILE}
 #
 
+# Enable azure az auto complete
+command -v az >/dev/null 2>&1 && { 
+	source ${DF_AZ_COMPLETION}
+}
+
 command -v kubectl >/dev/null 2>&1 && { 
 	source ${DF_K8S_ALIASES_FILE}
 	source ${DF_K8S_COMP_RELATED_FILE}
@@ -34,7 +39,7 @@ command -v fzf >/dev/null 2>&1 && {
 
 	source ${DF_FZF_DEFAULTS_FILE}
 	source ${DF_FZF_FS_FILE}
-	source ${DF_FZF_SOURCE_COMP_FILE}
+	# source ${DF_FZF_SOURCE_COMP_FILE}
 	source ${DF_FZF_SOURCE__KEY_BINDING_FILE}
 	# source ${DF_FZF_FS_FILE}
 	command -v git >/dev/null 2>&1 && source ${DF_FZF_SOURCE_GIT_FILE}
@@ -72,6 +77,8 @@ alias commit='git commit -m '
 
 # Extra
 alias Copy='xclip -r -sel clip'
+
+alias kill_ssh_sessions='kill -9 $(ps -aux | grep ssh | grep -v "grep" | grep -v "/usr/" | awk "{print $2}") |true'
 #############################################################################
 #############################################################################
 #############################################################################

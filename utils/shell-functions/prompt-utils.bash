@@ -39,7 +39,7 @@ __exit_code()
 __prompt_hostname()
 {
     [ "$SHOW_HOSTNAME" != "false" ] && { 
-        HOSTNAME_COLORED="${HOSTNAME_COLOR}\h${DF_RESET_COLORS_A}"
+        HOSTNAME_COLORED="${HOSTNAME_COLOR}\h${DF_RESET_COLORS}"
         USER_AT_COLORED="${AT_HOST_COLOR}@${DF_RESET_COLORS_A}"
         USER_AT_HOST="${USER_AT_COLORED}${HOSTNAME_COLORED}"
     }

@@ -53,4 +53,8 @@ command -v fzf >/dev/null 2>&1 || {
     #alias set_namespace='kubectl config set-context $(kubectl config current-context) --namespace='
     alias set_namespace='kubectl config set-context --current --namespace'
     alias namespace='kubectl config set-context --current --namespace'
+    # alias namespace='kubectl config set-context --current --namespace'
 }
+
+# Commands shortcuts
+alias kevents='kubectl get events --sort-by=.metadata.creationTimestamp'
